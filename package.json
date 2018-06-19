@@ -7,8 +7,8 @@
     },
     "dependencies": {
         "react": "16.0.0-alpha.12",
-        "react-native": "0.48.1",
-        "react-native-code-push": "git+https://github.com/Microsoft/react-native-code-push.git#2c77292a1d7a8df8eb10a1b7c17b211eb5dbc076"
+        "react-native-code-push": "git+https://github.com/annakocheshkova/react-native-code-push.git#2ff3f1907b44d081dfafd1eb70b12d00f6684843",
+        "react-native": "0.48.1"
     },
     "devDependencies": {
         "babel-loader": "7.1.2",
