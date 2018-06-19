@@ -17,6 +17,8 @@ import {
 
 import BatchedBridge from "react-native/Libraries/BatchedBridge/BatchedBridge";
 
+import codePush from "react-native-code-push";
+
 export class ExposedToJava {
   alert(message) {
       alert(message);
@@ -33,47 +35,13 @@ export default class ActivityDemoComponent extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+          Welcome to face recognizer! 4
+        </Text>       
         <View style={styles.buttonContainer}>
           <Button
-            onPress={() => activityStarter.navigateToExample()}
-            title='Start example activity'
-          />
-          <Button
-            onPress={() => activityStarter.dialNumber('+1 (234) 567-8910')}
-            title='Dial +1 (234) 567-8910'
-          />
-          <Button
-            onPress={() => activityStarter.getActivityName((name) => { alert(name); })}
-            title='Get activity name'
-          />
-          <Button
-            onPress={async () => {
-              try {
-                var name = await activityStarter.getActivityNameAsPromise();
-                alert(name);
-                } catch (e) {
-                  alert(e.message);
-                }
-              }}
-            title='Get activity name as promise'
-          />
-          <Button
-            onPress={() => NativeModules.Clipboard.setString("Hello from JavaScript!")}
-            title='Copy to clipboard'
-          />
-          <Button
-            onPress={() => activityStarter.callJavaScript()}
-            title='Call JavaScript from Java'
-          />
+            onPress={() => activityStarter.navigateToImageClassifier()}
+            title='Open camera'
+          />          
         </View>
       </View>
     );
@@ -105,7 +73,11 @@ const styles = StyleSheet.create({
   },
 });
 
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL, installMode: codePush.InstallMode.IMMEDIATE };
+
+ActivityDemoComponent = codePush(codePushOptions)(ActivityDemoComponent);
 AppRegistry.registerComponent('ActivityDemoComponent', () => ActivityDemoComponent);
 
 const eventEmitter = new NativeEventEmitter(activityStarter);
 eventEmitter.addListener(activityStarter.MyEventName, (params) => alert(params));
+

@@ -1,17 +1,18 @@
 {
     "name": "activity",
-    "version": "0.0.4",
+    "version": "0.0.3",
     "private": true,
     "scripts": {
         "start": "node node_modules/react-native/local-cli/cli.js start"
     },
     "dependencies": {
-        "react": "^16.3.1",
-        "react-native": "0.55.3"
+        "react": "16.0.0-alpha.12",
+        "react-native": "0.48.1",
+        "react-native-code-push": "git+https://github.com/Microsoft/react-native-code-push.git#2c77292a1d7a8df8eb10a1b7c17b211eb5dbc076"
     },
     "devDependencies": {
         "babel-loader": "7.1.2",
         "babel-plugin-transform-runtime": "6.23.0",
-        "babel-preset-react-native": "4.0.0"
+        "babel-preset-react-native": "3.0.2"
     }
 }
