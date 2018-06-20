@@ -44,13 +44,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.microsoft.codepush.common.datacontracts.CodePushRemotePackage;
-import com.microsoft.codepush.common.datacontracts.CodePushSyncOptions;
-import com.microsoft.codepush.common.enums.CodePushInstallMode;
-import com.microsoft.codepush.common.enums.CodePushSyncStatus;
-import com.microsoft.codepush.common.exceptions.CodePushNativeApiCallException;
-import com.microsoft.codepush.common.interfaces.CodePushSyncStatusListener;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +62,7 @@ import pp.facerecognizer.listener.BuildStatusListener;
 import pp.facerecognizer.listener.ImageDeleteCallback;
 import pp.facerecognizer.listener.ImageUploadCallback;
 
-public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener, ImageUploadCallback, ImageDeleteCallback, BuildStatusListener, CodePushSyncStatusListener {
+public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener, ImageUploadCallback, ImageDeleteCallback, BuildStatusListener/*, CodePushSyncStatusListener*/ {
 
     private static final Logger LOGGER = new Logger();
 
@@ -145,11 +138,11 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
             }
         });
 
-        syncButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                onSync();
-            }
-        });
+//        syncButton.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View view) {
+//                onSync();
+//            }
+//        });
     }
 
     private void initViews() {
@@ -172,8 +165,8 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
 
         codePush = MainApplication.mCodePush;
 
-        codePush.addSyncStatusListener(ClassifierActivity.this);
-        sync();
+        //codePush.addSyncStatusListener(ClassifierActivity.this);
+       // sync();
         checkAssets();
 
         getTagsInBackground();
@@ -189,11 +182,11 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
 
     private void checkAssets() {
         try {
-            if (codePush.getPackageFolderPath() != null) {
-                String assetsModelPath = codePush.getPackageFolderPath()
+           if (codePush.getPackageFolder() != null) {
+                String assetsModelPath = codePush.getPackageFolder()
                         + File.separator + "assets" + File.separator
                         + getString(R.string.MODEL_FILE);
-                String assetsLabelPath = codePush.getPackageFolderPath()
+                String assetsLabelPath = codePush.getPackageFolder()
                         + File.separator + "assets" + File.separator
                         + getString(R.string.LABELS_FILE);
                 if (new File(assetsModelPath).exists()) {
@@ -222,7 +215,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
         }
     }
 
-    private void sync() {
+   /* private void sync() {
         new Thread(new Runnable() {
             @Override public void run() {
                 try {
@@ -235,7 +228,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
             }
 
         }).start();
-    }
+    }*/
 
     private void updateSyncButton(final boolean updateAvailable) {
         runOnUiThread(new Runnable() {
@@ -246,7 +239,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
         });
     }
 
-    public void onSync() {
+   /* public void onSync() {
         if (codePush != null) {
             syncInProgress = true;
             final CodePushSyncOptions assetsSyncOptions = new CodePushSyncOptions();
@@ -261,71 +254,71 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                 }
             });
         }
-    }
+    }*/
 
-    public void syncStatusChanged(final CodePushSyncStatus syncStatus) {
-        runOnUiThread(new Runnable() {
-            @Override public void run() {
-                switch (syncStatus) {
-                    case INSTALLING_UPDATE:
-                    case CHECKING_FOR_UPDATE:
-                    case DOWNLOADING_PACKAGE:
-                    case SYNC_IN_PROGRESS: {
-                        syncButton.setVisibility(View.GONE);
-                        progressBar.animate();
-                        progressBar.setVisibility(View.VISIBLE);
-                    }
-                    break;
-                    case UNKNOWN_ERROR: {
-                        syncButton.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.close_red);
-                        syncButton.setImageDrawable(drawable);
-                        Handler uiHandler = new Handler(Looper.getMainLooper());
-                        uiHandler.postDelayed(new Runnable() {
-                            @Override public void run() {
-                                syncInProgress = false;
-                                updateSyncButton(false);
-                                restart();
-                            }
-                        }, 1000);
-                    }
-                    break;
-                    default: {
-                        syncButton.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        checkAssets();
-                        syncInProgress = false;
-                        updateSyncButton(false);
-                        restart();
-                        break;
-                    }
-                    case UPDATE_INSTALLED:
-                        syncButton.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        checkAssets();
-                        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.check_green);
-                        syncButton.setImageDrawable(drawable);
-                       /* Handler uiHandler = new Handler(Looper.getMainLooper());
-                        uiHandler.postDelayed(new Runnable() {
-                            @Override public void run() {*/
-                                syncInProgress = false;
-                                updateSyncButton(false);
-                                restart();
-                                try {
-                                    codePush.notifyApplicationReady();
-                                } catch (CodePushNativeApiCallException e) {}
-                          /*  }
-                        }, 1000);*/
-                        android.app.AlertDialog.Builder dlgAlert = new android.app.AlertDialog.Builder(ClassifierActivity.this);
-                        dlgAlert.setMessage("New model has been successfully installed");
-                        dlgAlert.setPositiveButton("OK", null);
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-                }
-            }
-        });
-    }
+//    public void syncStatusChanged(final CodePushSyncStatus syncStatus) {
+//        runOnUiThread(new Runnable() {
+//            @Override public void run() {
+//                switch (syncStatus) {
+//                    case INSTALLING_UPDATE:
+//                    case CHECKING_FOR_UPDATE:
+//                    case DOWNLOADING_PACKAGE:
+//                    case SYNC_IN_PROGRESS: {
+//                        syncButton.setVisibility(View.GONE);
+//                        progressBar.animate();
+//                        progressBar.setVisibility(View.VISIBLE);
+//                    }
+//                    break;
+//                    case UNKNOWN_ERROR: {
+//                        syncButton.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.GONE);
+//                        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.close_red);
+//                        syncButton.setImageDrawable(drawable);
+//                        Handler uiHandler = new Handler(Looper.getMainLooper());
+//                        uiHandler.postDelayed(new Runnable() {
+//                            @Override public void run() {
+//                                syncInProgress = false;
+//                                updateSyncButton(false);
+//                                restart();
+//                            }
+//                        }, 1000);
+//                    }
+//                    break;
+//                    default: {
+//                        syncButton.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.GONE);
+//                        checkAssets();
+//                        syncInProgress = false;
+//                        updateSyncButton(false);
+//                        restart();
+//                        break;
+//                    }
+//                    case UPDATE_INSTALLED:
+//                        syncButton.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.GONE);
+//                        checkAssets();
+//                        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.check_green);
+//                        syncButton.setImageDrawable(drawable);
+//                       /* Handler uiHandler = new Handler(Looper.getMainLooper());
+//                        uiHandler.postDelayed(new Runnable() {
+//                            @Override public void run() {*/
+//                                syncInProgress = false;
+//                                updateSyncButton(false);
+//                                restart();
+//                                try {
+//                                    codePush.notifyApplicationReady();
+//                                } catch (CodePushNativeApiCallException e) {}
+//                          /*  }
+//                        }, 1000);*/
+//                        android.app.AlertDialog.Builder dlgAlert = new android.app.AlertDialog.Builder(ClassifierActivity.this);
+//                        dlgAlert.setMessage("New model has been successfully installed");
+//                        dlgAlert.setPositiveButton("OK", null);
+//                        dlgAlert.setCancelable(true);
+//                        dlgAlert.create().show();
+//                }
+//            }
+//        });
+//    }
 
     private void onKick() {
         mTrainingInProgress = true;

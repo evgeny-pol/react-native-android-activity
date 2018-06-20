@@ -21,7 +21,7 @@ import codePush from "react-native-code-push";
 
 export class ExposedToJava {
   alert(message) {
-      alert(message);
+    alert(message);
   }
 }
 
@@ -30,23 +30,35 @@ BatchedBridge.registerCallableModule("JavaScriptVisibleToJava", exposedToJava);
 
 const activityStarter = NativeModules.ActivityStarter;
 
-export default class ActivityDemoComponent extends Component {
+class ActivityDemoComponent extends Component {
+  onSync() {
+    codePush.sync({
+      updateDialog: true,
+      installMode: codePush.InstallMode.IMMEDIATE
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to face recognizer! 4
-        </Text>       
+        </Text>
         <View style={styles.buttonContainer}>
           <Button
             onPress={() => activityStarter.navigateToImageClassifier()}
             title='Open camera'
-          />          
+          />
+          <Button
+            onPress={this.onSync}
+            title='Check for updates'
+          />
         </View>
       </View>
     );
   }
 }
+
+export default ActivityDemoComponent;
 
 const styles = StyleSheet.create({
   buttonContainer: {

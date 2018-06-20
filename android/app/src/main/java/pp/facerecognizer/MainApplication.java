@@ -34,7 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            CodePush codePush = new CodePush(getString(R.string.CODE_PUSH_DEPLOYMENT_KEY), getApplication(), BuildConfig.DEBUG, getString(R.string.APP_SECRET));
+            CodePush codePush = new CodePush(getString(R.string.CODE_PUSH_DEPLOYMENT_KEY), getApplication(), BuildConfig.DEBUG);
             mCodePush = codePush;
             return Arrays.asList(
                     new ActivityStarterReactPackage(),
