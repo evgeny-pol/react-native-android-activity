@@ -99,6 +99,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     //compile 'org.tensorflow:tensorflow-android:1.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    compile "com.microsoft.appcenter:appcenter-distribute:1.6.1"
     compile project(':react-native-code-push')
     compile("com.facebook.react:react-native:0.48.1")
     compile 'com.microsoft.azure.android:azure-storage-android:2.0.0@aar'

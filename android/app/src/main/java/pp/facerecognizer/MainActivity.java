@@ -8,6 +8,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.devsupport.interfaces.DevOptionHandler;
 import com.facebook.react.devsupport.interfaces.DevSupportManager;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.distribute.Distribute;
 
 public class MainActivity extends ReactActivity {
 
@@ -38,5 +40,7 @@ public class MainActivity extends ReactActivity {
                 Toast.makeText(MainActivity.this, "Hello from custom dev option", Toast.LENGTH_SHORT).show();
             }
         });
+
+        AppCenter.start(getApplication(), getString(R.string.APP_SECRET), Distribute.class);
     }
 }
