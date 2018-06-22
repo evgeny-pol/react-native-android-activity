@@ -81,14 +81,15 @@ public class LegacyCameraConnectionFragment extends Fragment {
                     camera = Camera.open(index);
 
                     try {
+                        camera.setDisplayOrientation(90);
+                        camera.setPreviewTexture(texture);
                         Camera.Parameters parameters = camera.getParameters();
                         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-
-                        camera.setDisplayOrientation(90);
                         camera.setParameters(parameters);
-                        camera.setPreviewTexture(texture);
-                    } catch (IOException exception) {
-                        camera.release();
+                    // } catch (IOException exception) {
+                    } catch (Exception e) {
+                        // camera.release();
+                        LOGGER.e(e, "Exception!");
                     }
 
                     camera.setPreviewCallbackWithBuffer(imageListener);
