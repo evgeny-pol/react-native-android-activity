@@ -7,7 +7,7 @@
     },
     "dependencies": {
         "react": "16.0.0-alpha.12",
-        "react-native-code-push": "git+https://github.com/annakocheshkova/react-native-code-push.git#2ff3f1907b44d081dfafd1eb70b12d00f6684843",
+        "react-native-code-push": "git+https://github.com/annakocheshkova/react-native-code-push.git#e1fad477bba4dea3ea8661a12a6fe7fa991523d2",
         "react-native": "0.48.1"
     },
     "devDependencies": {
