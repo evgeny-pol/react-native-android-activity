@@ -2,7 +2,6 @@
 <resources>
     <string name="CUSTOM_VISION_TRAINING_KEY"></string>
     <string name="CUSTOM_VISION_PROJECT_ID"></string>
-    <string name="CODE_PUSH_DEPLOYMENT_KEY"></string>
     <string name="VSTS_PAT"></string>
     <string name="APP_SECRET"></string>
     <string name="VSTS_PROJECT_NAME">PM</string>
