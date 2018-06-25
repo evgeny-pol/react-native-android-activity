@@ -1,4 +1,5 @@
 <resources>
+    <string name="CODE_PUSH_DEPLOYMENT_KEY" moduleConfig="true">CODEPUSH_DEPLOYMENT_KEY_HERE</string>
     <string name="app_name">CustomVision Sample</string>
     <string name="activity_name_classification">Classify</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
