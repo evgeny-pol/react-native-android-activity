@@ -183,16 +183,18 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     private void checkAssets() {
         try {
            if (codePush.getPackageFolder() != null) {
-                String assetsModelPath = codePush.getPackageFolder()
-                        + File.separator + "assets" + File.separator
-                        + getString(R.string.MODEL_FILE);
-                String assetsLabelPath = codePush.getPackageFolder()
-                        + File.separator + "assets" + File.separator
-                        + getString(R.string.LABELS_FILE);
+                String assetsModelPath = codePush.getPackageFolder() + File.separator + "assets" + File.separator + getString(R.string.MODEL_FILE);
+                String assetsLabelPath = codePush.getPackageFolder() + File.separator + "assets" + File.separator + getString(R.string.LABELS_FILE);
+
+                LOGGER.i("model file = " + assetsModelPath);
+                LOGGER.i("labels file = " + assetsLabelPath);
+
                 if (new File(assetsModelPath).exists()) {
+                    LOGGER.i("model file exists");
                     MSCognitiveServicesClassifier.setModelFile(assetsModelPath);
                 }
                 if (new File(assetsLabelPath).exists()) {
+                    LOGGER.i("labels file exists");
                     MSCognitiveServicesClassifier.setLabelFile(assetsLabelPath);
                 }
             }
